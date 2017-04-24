@@ -2,7 +2,8 @@ package com.sck.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import javax.persistence.JoinColumn;
+import javax.persistence.Transient;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
