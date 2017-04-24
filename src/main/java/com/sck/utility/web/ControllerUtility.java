@@ -23,7 +23,6 @@ public class ControllerUtility {
         Iterator it = postedObject.getForeignKeys().entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
-            //System.out.println(pair.getKey() + " = " + pair.getValue());
 
             // Class name of foreign key
             String foreignClass = pair.getValue().toString();
@@ -36,10 +35,8 @@ public class ControllerUtility {
             // Try to retrieve the proper get method
             Method method = null;
             try {
-                //System.out.println(postedObject.getClass().getMethod("get"+foreignKey).getName());
                 method = postedObject.getClass().getMethod("get"+foreignKey);
             }catch (NoSuchMethodException e) {
-                //System.out.println("get"+foreignKey+" does not exist!");
                 continue;
             }
 
@@ -47,14 +44,10 @@ public class ControllerUtility {
             Long returnedId = null;
             if(method != null) {
                 try {
-                    if(method.invoke(postedObject) == null) {
-                        //System.out.println("get"+foreignKey+" is NULL");
-                    }else {
-                        //System.out.println(method.invoke(postedObject));
+                    if(!(method.invoke(postedObject) == null)) {
                         returnedId = (long)method.invoke(postedObject);
                     }
                 }catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
-                    //System.out.println("get"+foreignKey+" failed!");
                     continue;
                 }
             }else {
@@ -67,7 +60,6 @@ public class ControllerUtility {
                 try {
                     relatedEntity = (RestInitializable)Class.forName(foreignClass).newInstance();
                 }catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-                    //System.out.println("Class "+foreignClass+" failed!");
                     continue;
                 }
 
@@ -81,13 +73,10 @@ public class ControllerUtility {
             method = null;
             try {
                 if(postedObject.getClass().getMethod("set"+relatedEntity.getClass().getSimpleName(),relatedEntity.getClass()) == null) {
-                    //System.out.println("set"+relatedEntity.getClass().getSimpleName()+" is null?");
                 }else {
-                    //System.out.println(postedObject.getClass().getMethod("set"+relatedEntity.getClass().getSimpleName(),relatedEntity.getClass()).getName());
                     method = postedObject.getClass().getMethod("set"+relatedEntity.getClass().getSimpleName(),relatedEntity.getClass());
                 }
             }catch (NoSuchMethodException e) {
-                //System.out.println("set"+relatedEntity.getClass().getSimpleName()+" does not exist!");
                 continue;
             }
 
@@ -96,7 +85,6 @@ public class ControllerUtility {
                 try {
                     method.invoke(postedObject, relatedEntity);
                 }catch (IllegalAccessException | InvocationTargetException e) {
-                    //System.out.println(method.getName()+" failed!");
                     continue;
                 }
             }

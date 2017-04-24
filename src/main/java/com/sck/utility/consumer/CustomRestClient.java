@@ -101,21 +101,18 @@ public class CustomRestClient {
         CustomRestClientResponse response = new CustomRestClientResponse();
         response.setHeaders(httpResponse.getAllHeaders());
         response.setStatusCode(httpResponse.getStatusLine().getStatusCode());
-        String content = "";
+        StringBuilder content = new StringBuilder();
 
         if(httpResponse.getEntity() != null) {
             final BufferedReader reader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
             String line;
             while ((line = reader.readLine()) != null) {
-                content += line;
+                content.append(line);
             }
             reader.close();
         }
         client.close();
-        response.setResponse(content);
-
-        //System.out.println(response.getStatusCode());
-        //System.out.println(content);
+        response.setResponse(content.toString());
 
         return response;
     }
