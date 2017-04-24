@@ -3,6 +3,7 @@ package com.sck.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * Created by TEKKINCERS on 4/24/2017.
@@ -59,5 +60,18 @@ public class ItemEntity extends BaseEntity implements RestInitializable<Long> {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemEntity that = (ItemEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
