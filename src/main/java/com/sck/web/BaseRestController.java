@@ -40,12 +40,9 @@ public abstract class BaseRestController<T, ID extends Serializable> {
     @RequestMapping(
             value = "",
             method = RequestMethod.GET,
-            produces = {"application/xml", "application/json"}
+            produces = {"application/json","application/xml"}
     )
-    public ResponseEntity<PaginatedDTO<T>> getAll(
-            Pageable pageable,
-            @RequestParam(value = "withrelated", defaultValue = "false", required = false) Boolean withRelated
-    ) {
+    public ResponseEntity<PaginatedDTO<T>> getAll(Pageable pageable) {
 
         Page<T> foundObjects = repository.findAll(pageable);
 
@@ -62,12 +59,9 @@ public abstract class BaseRestController<T, ID extends Serializable> {
     @RequestMapping(
             value = "/{id}",
             method = RequestMethod.GET,
-            produces = {"application/xml", "application/json"}
+            produces = {"application/json","application/xml"}
     )
-    public ResponseEntity<T> get(
-            @PathVariable ID id,
-            @RequestParam(value = "withrelated", defaultValue = "false", required = false) Boolean withRelated
-    ) {
+    public ResponseEntity<T> get(@PathVariable ID id) {
 
         T foundObject = repository.findOne(id);
 
@@ -84,8 +78,8 @@ public abstract class BaseRestController<T, ID extends Serializable> {
     @RequestMapping(
             value = "",
             method = RequestMethod.POST,
-            consumes = {"application/xml", "application/json"},
-            produces = {"application/xml", "application/json"}
+            consumes = {"application/json","application/xml"},
+            produces = {"application/json","application/xml"}
     )
     public ResponseEntity<?> create(@Valid @RequestBody T postedObject) {
 
@@ -112,8 +106,8 @@ public abstract class BaseRestController<T, ID extends Serializable> {
     @RequestMapping(
             value = "/array",
             method = RequestMethod.POST,
-            consumes = {"application/xml", "application/json"},
-            produces = {"application/xml", "application/json"}
+            consumes = {"application/json","application/xml"},
+            produces = {"application/json","application/xml"}
     )
     public ResponseEntity<?> createAll(@Valid @RequestBody List<T> postedObjects) {
 
@@ -141,8 +135,8 @@ public abstract class BaseRestController<T, ID extends Serializable> {
     @RequestMapping(
             value = "",
             method = RequestMethod.PUT,
-            consumes = {"application/xml", "application/json"},
-            produces = {"application/xml", "application/json"}
+            consumes = {"application/json","application/xml"},
+            produces = {"application/json","application/xml"}
     )
     public ResponseEntity<?> update(@Valid @RequestBody T postedObject) {
 
@@ -180,8 +174,8 @@ public abstract class BaseRestController<T, ID extends Serializable> {
     @RequestMapping(
             value = "/array",
             method = RequestMethod.PUT,
-            consumes = {"application/xml", "application/json"},
-            produces = {"application/xml", "application/json"}
+            consumes = {"application/json","application/xml"},
+            produces = {"application/json","application/xml"}
     )
     public ResponseEntity<?> updateAll(@Valid @RequestBody List<T> postedObjects) {
 
@@ -241,7 +235,7 @@ public abstract class BaseRestController<T, ID extends Serializable> {
     @RequestMapping(
             value = "/array",
             method = RequestMethod.DELETE,
-            consumes = {"application/xml", "application/json"}
+            consumes = {"application/json","application/xml"}
     )
     public ResponseEntity<?> deleteAll(@Valid @RequestBody List<T> postedObjects) {
 
@@ -276,12 +270,12 @@ public abstract class BaseRestController<T, ID extends Serializable> {
 
     @RequestMapping(
             value = "/search",
-            method = RequestMethod.GET
+            method = RequestMethod.GET,
+            produces = {"application/json","application/xml"}
     )
     public ResponseEntity<?> search(
             @RequestParam(value = "query") String query,
-            Pageable pageable,
-            @RequestParam(value = "withrelated", defaultValue = "false", required = false) Boolean withRelated
+            Pageable pageable
     ) {
 
         Node rootNode = new RSQLParser().parse(query);
