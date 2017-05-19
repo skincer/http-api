@@ -75,19 +75,10 @@
 		</dependency>
 
 		<!-- Security -->
-		<!--
-
-		|| Un-comment when testing is complete... ||
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-ldap</artifactId>
-		</dependency>
-		-->
 
 		<!-- Bean Mapping -->
 		<dependency>
